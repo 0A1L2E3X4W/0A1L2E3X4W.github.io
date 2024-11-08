@@ -2,6 +2,8 @@
 layout: post
 title: Gitignore For Unity
 date: '2024-11-07 20:13:44 +0800'
+categories: [Blogging, Tutorial]
+tags: [Examples]
 ---
 
 

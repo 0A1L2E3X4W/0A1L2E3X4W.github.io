@@ -2,6 +2,8 @@
 layout: post
 title: Pipewire Configure
 date: '2024-11-07 21:15:09 +0800'
+categories: [Blogging, Tutorial]
+tags: [Configuration]
 ---
 
 ### For Helvum (GTK patchbay for PipeWire):
