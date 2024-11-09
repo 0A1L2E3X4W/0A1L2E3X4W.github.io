@@ -139,15 +139,12 @@ umount /mnt
 ```bash
 # 挂载 / 目录
 mount -t btrfs -o subvol=/@,compress=zstd /dev/{partition} /mnt
-
 # 创建 /home 并挂载
 mkdir /mnt/home
 mount -t btrfs -o subvol=/@home,compress=zstd /dev/{partition} /mnt/home
-
 # 创建 /root 并挂载
 mkdir -p /mnt/boot
 mount /dev/{partition} /mnt/boot
-
 # 挂载交换分区
 swapon /dev/{partition}
 ```
