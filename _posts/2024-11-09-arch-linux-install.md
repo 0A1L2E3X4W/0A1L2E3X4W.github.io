@@ -6,53 +6,54 @@ categories: [Blogging, Tutorial]
 tags: [Configuration, Experience]
 ---
 
-### 1. stop reflector service
+### 1. 禁用 reflector 服务
 
-1. stop service
+1. 停止检查 reflector 当前状态服务
 ```bash
 systemctl stop reflector.service
 ```
 
-2. check service status
+2. 检查 reflector 当前状态
 ```bash
 systemctl status reflector.service
 ```
 
-### 2. stop buzzer
+### 2. 禁用蜂鸣器 buzzer
 
-#### stop buzzer now
+1. 暂时禁用（下次重启会开启）
 ```bash
 rmmod pcspkr
 ```
 
-#### permanently stop buzzer
-1. first make file
+2. 永久禁用
+首先创建文件 /etc/modprobe.d/blacklist.conf
 ```bash
-sudoedit /etc/modprobe.d/blacklist.conf
+sudo vim /etc/modprobe.d/blacklist.conf
 ```
 
-2. add these content
+添加内容
 ```bash
 blacklist pcspkr
 ```
+{: file='/etc/modprobe.d/blacklist.conf'}
 
-### 3. check UEFI mode
+### 3. 检查是否为 UEFI 模式启动
 ```bash
 ls /sys/firmware/efi/efivars
 ```
 
-### 4. connect to wifi/internet
-unblock wifi function
+### 4. 连接 WiFi 网络
+1. 解除 rfkill 禁用
 ```bash
 rfkill unblock wifi
 ```
 
-1. use command enter iwctl
+1. 进入 iwctl
 ```bash
 iwctl
 ```
 
-2. connect wifi
+1. 用 iwctl 连接 WiFi
 ```bash
 device list
 station wlan0 scan
@@ -61,18 +62,19 @@ station wlan0 connect {wifi-name}
 exit
 ```
 
-### 5. update clock
+### 5. 更新系统时间
 ```bash
 timedatectl set-ntp true
 timedatectl status
 ```
 
-### 6. Update Mirrorlist
+### 6. 更新镜像源
+1. 修改 /etc/pacman.d/mirrorlist
 ```bash
 vim /etc/pacman.d/mirrorlist
 ```
 
-mirror source
+2. 添加内容
 ```text
 Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch # 中国科学技术大学开源镜像站
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch # 清华大学开源软件镜像站
