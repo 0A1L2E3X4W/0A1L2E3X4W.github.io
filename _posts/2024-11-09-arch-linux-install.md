@@ -125,15 +125,17 @@ mount -t btrfs -o compress=zstd /dev/{partition} /mnt
 - -o：选项后添加挂载参数
 - compress=zstd：开启透明压缩
 
-7. 创建子卷，后取消挂载
+7. 创建子卷
 ```bash
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
-
+```
+8. 取消挂载
+```bash
 umount /mnt
 ```
 
-8. 挂载分区
+9. 挂载分区
 ```bash
 # 挂载 / 目录
 mount -t btrfs -o subvol=/@,compress=zstd /dev/{partition} /mnt
@@ -150,17 +152,17 @@ mount /dev/{partition} /mnt/boot
 swapon /dev/{partition}
 ```
 
-9. 使用 df 命令复查挂载情况
+10. 使用 df 命令复查挂载情况
 ```bash
 df -h
 ```
 
-10. 使用 free 命令复查 Swap 分区挂载情况
+11. 使用 free 命令复查 Swap 分区挂载情况
 ```bash
 free -h
 ```
 
-### 安装必须包
+### 8. 安装必须包
 
 1. 内核及 btrfs 文件系统必须包
 ```bash
