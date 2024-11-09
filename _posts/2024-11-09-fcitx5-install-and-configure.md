@@ -19,3 +19,4 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 SDL_MOULE=fcitx
 ```
+## 3. open fcitx5-configure tool and add "pinyin"
