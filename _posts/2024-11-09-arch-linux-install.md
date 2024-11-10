@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Arch Linux Install
+title: Arch Linux 基础安装
 date: 2024-11-09 22:22 +0800
 categories: [Blogging, Tutorial]
 tags: [Configuration, Experience]
