@@ -191,3 +191,116 @@ genfstab -U /mnt >> /mnt/etc/fstab
 ```bash
 cat /mnt/etc/fstab
 ```
+
+### 9. Change Root
+```bash
+arch-chroot /mnt
+```
+
+### 10. 新系统基础设置
+1. 设置主机名
+```bash
+vim /etc/hostname
+```
+
+2. 设置 host
+```bash
+vim /etc/hosts
+```
+3. 输入内容
+```text
+127.0.0.1   localhost
+::1         localhost
+127.0.1.1   myarch.localdomain myarch
+```
+
+4. 设置时区
+```bash
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+```
+
+5. 设置硬件时间
+```bash
+hwclock --systohc
+```
+
+6. 设置时区
+```bash
+timedatectl set-ntp true
+timedatectl set-zoneinfo Asis/Shanghai
+```
+
+7. 设置 Locale
+编辑 /etc/locale.gen，去掉 en_US.UTF-8 UTF-8 以及 zh_CN.UTF-8 UTF-8 行前的注释符号（#）
+```bash
+vim /etc/locale.gen
+```
+
+8. 生成 Locale
+```bash
+locale-gen
+```
+
+9. 输入内容
+```bash
+echo 'LANG=en_US.UTF-8' >> /etc/locale.conf
+```
+
+### 11. 用户设置
+1. 设置root密码
+```bash
+passwd root
+```
+
+2. 增加用户
+```bash
+useradd -m -G wheel -s /bin/bash {username}
+```
+
+3. 设置密码
+```bash
+passwd {username}
+```
+
+### 12. 引导安装
+1. 安装包
+```bash
+pacman -S grub efibootmgr os-prober
+```
+
+2. 安装 GRUB 到 EFI 分区
+- efi-directory=/boot —— 将 grubx64.efi 安装到之前的指定位置（EFI 分区）
+- bootloader-id=GRUB —— 取名为 GRUB
+```bash
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+```
+
+3. 接下来使用 vim 编辑 /etc/default/grub 文件
+```bash
+vim /etc/default/grub
+```
+
+4. 为了引导 win11，则还需要添加新的一行 GRUB_DISABLE_OS_PROBER=false
+```text
+GRUB_DEFAULT=0
+GRUB_TIMEOUT=5
+GRUB_DISTRIBUTOR="Arch"
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=5 quiet"
+GRUB_CMDLINE_LINUX=""
+GRUB_DISABLE_OS_PROBER=false
+```
+
+5. 最后生成 GRUB 所需的配置文件
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### 13. 完成安装
+```bash
+ # 退回安装环境
+exit
+ # 卸载新分区
+umount -R /mnt
+ # 重启
+reboot
+```
